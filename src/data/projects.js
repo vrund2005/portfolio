@@ -1,0 +1,39 @@
+export const projects = [
+  {
+    title: 'Squid Game using OpenCV',
+    description: "Fun computer vision game - don't move when the light is RED! Built with Python and OpenCV.",
+    tags: ['Python', 'OpenCV', 'Computer Vision'],
+    github: 'https://github.com/vrund2005/SquidGame-using-openCV',
+  },
+  {
+    title: 'Fake News Detection',
+    description: 'Machine learning model that classifies news articles as real or fake using NLP techniques.',
+    tags: ['Python', 'NLP', 'ML', 'Jupyter Notebook'],
+    github: 'https://github.com/vrund2005/Fake-news-detection',
+  },
+  {
+    title: 'Power BI Dashboard',
+    description: 'Interactive business intelligence dashboard created with Microsoft Power BI for data-driven insights.',
+    tags: ['Power BI', 'Data Visualization', 'Business Intelligence'],
+    github: 'https://github.com/vrund2005/Power-BI-Dashboard',
+  },
+  {
+    title: 'Image Classification (Dog vs Cat)',
+    description: 'Built a Dog vs Cat image classifier using CNN trained on 25,000 images from Kaggle.',
+    tags: ['Python', 'CNN', 'Deep Learning', 'Kaggle'],
+    github: 'https://github.com/vrund2005/Image-Classification-',
+  },
+  {
+    title: 'Loan Eligibility Prediction',
+    description:
+      'Web app using Flask + ML to predict loan eligibility with a responsive HTML/CSS UI and model comparison.',
+    tags: ['Python', 'Flask', 'ML', 'HTML/CSS'],
+    github: 'https://github.com/vrund2005/Loan-Eligibility-Prediction',
+  },
+  {
+    title:'And many more projects on my GitHub!',
+    description: 'Explore my GitHub profile for a variety of data science and machine learning projects.',
+    tags: ['GitHub', 'Data Science'],
+    github: 'https://github.com/vrund2005'
+  }
+]
