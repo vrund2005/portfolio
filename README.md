@@ -29,4 +29,3 @@ The project includes `vercel.json` with an SPA rewrite. Push to GitHub, import t
 ```bash
 npm run build
 ```
-# portfolio
