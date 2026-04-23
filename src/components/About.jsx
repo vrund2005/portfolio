@@ -1,10 +1,5 @@
-import { useEffect, useRef } from 'react'
 import { motion as Motion } from 'framer-motion'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import vrundPhoto from '../assets/vrund2.jpeg'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const stats = [
   { value: '11+', label: 'GitHub Repos' },
@@ -36,66 +31,8 @@ function ContributionGrid() {
 }
 
 function About() {
-  const aboutRef = useRef(null)
-
-  useEffect(() => {
-    const context = gsap.context(() => {
-      gsap.fromTo(
-        '.about-photo-card',
-        { rotateY: 90, opacity: 0 },
-        {
-          rotateY: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power4.out',
-          scrollTrigger: {
-            trigger: '.about-photo-card',
-            start: 'top 78%',
-            once: true,
-          },
-        },
-      )
-
-      gsap.from('.about-line', {
-        x: -60,
-        opacity: 0,
-        duration: 0.75,
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: aboutRef.current,
-          start: 'top 65%',
-          once: true,
-        },
-      })
-
-      gsap.utils.toArray('.stat-number').forEach((element) => {
-        const finalValue = element.dataset.count
-        if (!finalValue) return
-
-        const suffix = element.dataset.suffix || ''
-        const counter = { value: 0 }
-        gsap.to(counter, {
-          value: Number(finalValue),
-          duration: 1.6,
-          ease: 'power2.out',
-          onUpdate: () => {
-            element.textContent = `${Math.round(counter.value)}${suffix}`
-          },
-          scrollTrigger: {
-            trigger: element,
-            start: 'top 82%',
-            once: true,
-          },
-        })
-      })
-    }, aboutRef)
-
-    return () => context.revert()
-  }, [])
-
   return (
-    <section id="about" ref={aboutRef} className="section-pulse relative overflow-hidden bg-slate-950 px-5 py-24 sm:px-6 lg:px-8">
+    <section id="about" className="bg-slate-950 px-5 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <Motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -116,15 +53,13 @@ function About() {
             transition={{ duration: 0.65 }}
             className="mx-auto w-full max-w-md"
           >
-            <div className="about-photo-perspective relative">
-              <div className="about-photo-card relative">
+            <div className="relative">
               <div className="absolute -inset-4 rounded-[2rem] border border-indigo-400/20" />
               <img
                 src={vrundPhoto}
                 alt="Vrund Patel"
                 className="relative aspect-[4/5] w-full rounded-[2rem] object-cover shadow-2xl shadow-slate-950"
               />
-              </div>
             </div>
           </Motion.div>
 
@@ -134,7 +69,7 @@ function About() {
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.65 }}
           >
-            <p className="about-line text-lg leading-8 text-slate-300">
+            <p className="text-lg leading-8 text-slate-300">
               AI/ML Engineer with internship experience at Bacancy, building and deploying machine learning and computer
               vision solutions. Experienced in OpenCV, NLP, and model optimization, with a strong focus on real-world problem
               solving and scalable ML systems.
@@ -143,13 +78,7 @@ function About() {
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {stats.map((stat) => (
                 <div key={stat.label} className="rounded-lg border border-white/10 bg-white/[0.03] p-5">
-                  <div
-                    className="stat-number text-3xl font-extrabold text-white"
-                    data-count={stat.value.match(/^\d+/)?.[0] || ''}
-                    data-suffix={stat.value.match(/^\d+(.*)$/)?.[1] || ''}
-                  >
-                    {stat.value}
-                  </div>
+                  <div className="text-3xl font-extrabold text-white">{stat.value}</div>
                   <div className="mt-1 text-sm text-slate-400">{stat.label}</div>
                 </div>
               ))}

@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
-import { motion as Motion } from 'framer-motion'
-import gsap from 'gsap'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-scroll'
 import { FiMenu, FiX } from 'react-icons/fi'
 
@@ -14,21 +12,6 @@ const navItems = [
 
 function Navbar({ activeSection, isScrolled }) {
   const [isOpen, setIsOpen] = useState(false)
-  const navRef = useRef(null)
-
-  useEffect(() => {
-    const context = gsap.context(() => {
-      gsap.from('.nav-animate', {
-        y: -40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.08,
-        ease: 'power3.out',
-      })
-    }, navRef)
-
-    return () => context.revert()
-  }, [])
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
@@ -38,15 +21,12 @@ function Navbar({ activeSection, isScrolled }) {
   }, [isOpen])
 
   return (
-    <Motion.header
-      ref={navRef}
-      animate={{
-        backgroundColor: isScrolled || isOpen ? 'rgba(3, 7, 18, 0.8)' : 'rgba(3, 7, 18, 0)',
-        backdropFilter: isScrolled || isOpen ? 'blur(20px)' : 'blur(0px)',
-        borderColor: isScrolled || isOpen ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0)',
-      }}
-      transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="fixed inset-x-0 top-0 z-50 border-b shadow-2xl shadow-slate-950/20"
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b transition duration-300 ${
+        isScrolled || isOpen
+          ? 'border-white/10 bg-slate-950/80 shadow-2xl shadow-slate-950/20 backdrop-blur-xl'
+          : 'border-transparent bg-transparent'
+      }`}
     >
       <nav className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:px-6 md:h-20 lg:px-8">
         <Link
@@ -54,7 +34,7 @@ function Navbar({ activeSection, isScrolled }) {
           smooth
           duration={600}
           offset={-48}
-          className="nav-animate nav-logo cursor-pointer text-lg font-bold text-white md:text-xl"
+          className="cursor-pointer text-lg font-bold text-white md:text-xl"
           onClick={() => setIsOpen(false)}
         >
           Vrund Patel
@@ -69,7 +49,7 @@ function Navbar({ activeSection, isScrolled }) {
               spy={false}
               duration={650}
               offset={-78}
-              className={`nav-animate nav-link cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition ${
+              className={`cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition ${
                 activeSection === item.to
                   ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/25'
                   : 'text-slate-300 hover:bg-white/10 hover:text-white'
@@ -85,7 +65,7 @@ function Navbar({ activeSection, isScrolled }) {
           aria-label={isOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((current) => !current)}
-          className="nav-animate grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/5 text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-300 md:hidden"
+          className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/5 text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-300 md:hidden"
         >
           {isOpen ? <FiX size={20} /> : <FiMenu size={20} />}
         </button>
@@ -105,7 +85,7 @@ function Navbar({ activeSection, isScrolled }) {
               duration={650}
               offset={-48}
               onClick={() => setIsOpen(false)}
-              className={`nav-link cursor-pointer rounded-lg px-4 py-2.5 text-sm font-medium transition ${
+              className={`cursor-pointer rounded-lg px-4 py-2.5 text-sm font-medium transition ${
                 activeSection === item.to ? 'bg-indigo-500 text-white' : 'text-slate-300 hover:bg-white/10 hover:text-white'
               }`}
             >
@@ -114,7 +94,7 @@ function Navbar({ activeSection, isScrolled }) {
           ))}
         </div>
       </div>
-    </Motion.header>
+    </header>
   )
 }
 
