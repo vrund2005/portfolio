@@ -1,9 +1,13 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion as Motion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-scroll'
 import { FiDownload } from 'react-icons/fi'
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa'
 import vrundPhoto from '../assets/vrund.jpg'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const roles = [
   'Jr. Data Scientist',
@@ -17,6 +21,46 @@ function Hero() {
   const [displayText, setDisplayText] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
   const currentRole = useMemo(() => roles[roleIndex], [roleIndex])
+  const heroRef = useRef(null)
+  const photoRef = useRef(null)
+
+  useEffect(() => {
+    const context = gsap.context(() => {
+      gsap.from('.hero-word', {
+        y: 100,
+        opacity: 0,
+        rotateX: 90,
+        transformOrigin: '50% 100%',
+        duration: 0.9,
+        stagger: 0.06,
+        ease: 'power4.out',
+      })
+
+      gsap.from(photoRef.current, {
+        scale: 0.6,
+        opacity: 0,
+        duration: 1,
+        delay: 0.2,
+        ease: 'back.out(1.5)',
+      })
+
+      gsap.to('.hero-spread', {
+        z: -600,
+        opacity: 0,
+        x: (index) => (index % 2 === 0 ? -160 : 160),
+        rotateY: (index) => (index % 2 === 0 ? -18 : 18),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      })
+    }, heroRef)
+
+    return () => context.revert()
+  }, [])
 
   useEffect(() => {
     const typingSpeed = isDeleting ? 34 : 72
@@ -43,7 +87,11 @@ function Hero() {
   }, [currentRole, displayText, isDeleting])
 
   return (
-    <section id="home" className="relative flex min-h-screen items-center overflow-hidden px-5 pt-10 sm:px-6 md:pt-24 lg:px-8">
+    <section
+      id="home"
+      ref={heroRef}
+      className="relative flex min-h-screen items-center overflow-hidden px-5 pt-10 sm:px-6 md:pt-24 lg:px-8"
+    >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(99,102,241,0.2),transparent_35%),linear-gradient(135deg,#0f172a_0%,#111827_48%,#020617_100%)]" />
       <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(rgba(255,255,255,0.28)_1px,transparent_1px)] [background-size:34px_34px]" />
       <Motion.div
@@ -61,7 +109,7 @@ function Hero() {
         initial={{ opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr]"
+        className="hero-spread relative z-10 mx-auto grid w-full max-w-6xl items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr]"
       >
         <div className="text-center lg:text-left">
           <Motion.p
@@ -74,7 +122,18 @@ function Hero() {
           </Motion.p>
 
           <h1 className="text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-7xl">
-            Hi, I&apos;m <span className="text-indigo-300">Vrund Patel</span>
+            <span className="hero-word-wrap">
+              <span className="hero-word">Hi,</span>
+            </span>{' '}
+            <span className="hero-word-wrap">
+              <span className="hero-word">I&apos;m</span>
+            </span>{' '}
+            <span className="hero-word-wrap">
+              <span className="hero-word text-indigo-300">Vrund</span>
+            </span>{' '}
+            <span className="hero-word-wrap">
+              <span className="hero-word text-indigo-300">Patel</span>
+            </span>
           </h1>
 
           <div className="mt-6 min-h-10 text-xl font-semibold text-cyan-100 sm:text-2xl">
@@ -92,14 +151,14 @@ function Hero() {
               smooth
               duration={650}
               offset={-78}
-              className="inline-flex h-12 cursor-pointer items-center justify-center rounded-full bg-indigo-500 px-6 font-semibold text-white shadow-xl shadow-indigo-500/30 transition hover:-translate-y-1 hover:bg-indigo-400"
+              className="shimmer-button inline-flex h-12 cursor-pointer items-center justify-center rounded-full bg-indigo-500 px-6 font-semibold text-white shadow-xl shadow-indigo-500/30 transition hover:-translate-y-1 hover:bg-indigo-400"
             >
               View My Projects
             </Link>
             <a
               href="/resume.pdf"
               download
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/15 px-6 font-semibold text-white transition hover:-translate-y-1 hover:border-indigo-300 hover:bg-white/10"
+              className="shimmer-button inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/15 px-6 font-semibold text-white transition hover:-translate-y-1 hover:border-indigo-300 hover:bg-white/10"
             >
               <FiDownload />
               Download Resume
@@ -134,7 +193,8 @@ function Hero() {
           transition={{ delay: 0.2, duration: 0.7 }}
           className="mx-auto flex justify-center lg:justify-end"
         >
-          <div className="relative h-72 w-72 sm:h-96 sm:w-96">
+          <div ref={photoRef} className="hero-photo-wrap relative h-72 w-72 sm:h-96 sm:w-96">
+            <div className="hero-photo-ring" />
             <div className="absolute inset-0 rounded-full border border-indigo-300/20" />
             <img
               src={vrundPhoto}
