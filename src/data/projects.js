@@ -1,5 +1,11 @@
 export const projects = [
   {
+    title: 'RAG-based YouTube Q&A System',
+    description: "Built a RAG pipeline using LangChain, FAISS, and Gemini to answer questions from video transcripts. Applied chunking and embeddings for efficient retrieval and context-aware responses.",
+    tags: ['GenAI', 'FAISS', 'RAG', 'Gemini', 'LangChain'],
+    github: 'https://github.com/vrund2005/SquidGame-using-openCV',
+  },
+  {
     title: 'Squid Game using OpenCV',
     description: "Fun computer vision game - don't move when the light is RED! Built with Python and OpenCV.",
     tags: ['Python', 'OpenCV', 'Computer Vision'],

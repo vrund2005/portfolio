@@ -2,9 +2,9 @@ import { motion as Motion } from 'framer-motion'
 import vrundPhoto from '../assets/vrund2.jpeg'
 
 const stats = [
-  { value: '11+', label: 'GitHub Repos' },
-  { value: '10+', label: 'Projects' },
-  { value: 'Power BI', label: 'Certification' },
+  { value: '14+', label: 'GitHub Repos' },
+  { value: '15+', label: 'Projects' },
+  // { value: 'Power BI', label: 'Certification' },
 ]
 
 function ContributionGrid() {

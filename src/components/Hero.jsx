@@ -8,6 +8,7 @@ import vrundPhoto from '../assets/vrund.jpg'
 const roles = [
   'Jr. Data Scientist',
   'AI/ML Enthusiast',
+  'GenAI & AgenticAI',
   'Business Intelligence Explorer',
   'Power BI & n8n automation',
 ]

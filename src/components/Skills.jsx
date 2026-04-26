@@ -6,12 +6,20 @@ const skillGroups = [
     skills: ['Python', 'SQL'],
   },
   {
-    group: 'Dirty with Data',
-    skills: ['Machine Learning', 'Deep Learning', 'Computer Vision', 'NLP', 'Langchain'],
+    group: 'ML/DL',
+    skills: ['Scikit-learn', 'TensorFlow/Keras', 'NLP', 'Computer Vision'],
   },
   {
-    group: 'Tools',
-    skills: ['Power BI', 'Jupyter Notebook', 'Git/GitHub', 'Kaggle', 'n8n'],
+    group: 'GenAI & LLMs',
+    skills: ['LangChain', 'LangGraph', 'RAG', 'FAISS', 'Prompt Engineering'],
+  },
+  {
+    group: 'Data & Visualization',
+    skills: ['Pandas', 'NumPy', 'Matplotlib', 'Power BI'],
+  },
+  {
+    group: 'Tools & Frameworks',
+    skills: ['n8n', 'FastAPI', 'Git/GitHub', 'Jupyter', 'Google Colab'],
   },
   {
     group: 'Other',
