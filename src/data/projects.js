@@ -3,13 +3,19 @@ export const projects = [
     title: 'RAG-based YouTube Q&A System',
     description: "Built a RAG pipeline using LangChain, FAISS, and Gemini to answer questions from video transcripts. Applied chunking and embeddings for efficient retrieval and context-aware responses.",
     tags: ['GenAI', 'FAISS', 'RAG', 'Gemini', 'LangChain'],
-    github: 'https://github.com/vrund2005/SquidGame-using-openCV',
+    github: 'https://github.com/vrund2005/youtube-rag-assistant',
   },
   {
     title: 'Squid Game using OpenCV',
     description: "Fun computer vision game - don't move when the light is RED! Built with Python and OpenCV.",
     tags: ['Python', 'OpenCV', 'Computer Vision'],
     github: 'https://github.com/vrund2005/SquidGame-using-openCV',
+  },
+    {
+    title: 'Lead Generation Automation - n8n',
+    description: "Workflow fetches 100 companies from Apify, Scrapes their LinkdIn Profiles & their Websites and generate 3 personalised emails",
+    tags: ['n8n', 'Automation'],
+    github: 'https://github.com/vrund2005/ai-lead-generation-n8n',
   },
   {
     title: 'Fake News Detection',
@@ -23,19 +29,19 @@ export const projects = [
     tags: ['Power BI', 'Data Visualization', 'Business Intelligence'],
     github: 'https://github.com/vrund2005/Power-BI-Dashboard',
   },
-  {
-    title: 'Image Classification (Dog vs Cat)',
-    description: 'Built a Dog vs Cat image classifier using CNN trained on 25,000 images from Kaggle.',
-    tags: ['Python', 'CNN', 'Deep Learning', 'Kaggle'],
-    github: 'https://github.com/vrund2005/Image-Classification-',
-  },
-  {
-    title: 'Loan Eligibility Prediction',
-    description:
-      'Web app using Flask + ML to predict loan eligibility with a responsive HTML/CSS UI and model comparison.',
-    tags: ['Python', 'Flask', 'ML', 'HTML/CSS'],
-    github: 'https://github.com/vrund2005/Loan-Eligibility-Prediction',
-  },
+  // {
+  //   title: 'Image Classification (Dog vs Cat)',
+  //   description: 'Built a Dog vs Cat image classifier using CNN trained on 25,000 images from Kaggle.',
+  //   tags: ['Python', 'CNN', 'Deep Learning', 'Kaggle'],
+  //   github: 'https://github.com/vrund2005/Image-Classification-',
+  // },
+  // {
+  //   title: 'Loan Eligibility Prediction',
+  //   description:
+  //     'Web app using Flask + ML to predict loan eligibility with a responsive HTML/CSS UI and model comparison.',
+  //   tags: ['Python', 'Flask', 'ML', 'HTML/CSS'],
+  //   github: 'https://github.com/vrund2005/Loan-Eligibility-Prediction',
+  // },
   {
     title:'And many more projects on my GitHub!',
     description: 'Explore my GitHub profile for a variety of data science and machine learning projects.',
