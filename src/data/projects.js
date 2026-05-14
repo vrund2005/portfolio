@@ -1,5 +1,11 @@
 export const projects = [
   {
+    title: 'RoastForge — MCP-Enabled Agentic AI Resume Roaster & Rebuilder',
+    description: "Built a 8-node LangGraph + FastMCP agentic workflow that parses resumes, brutally roasts weaknesses, evaluates ATS fit (0–100), iteratively rebuilds until score > 90, generates interview questions, and exports professional PDF resumes autonomously",
+    tags: ['GenAI', 'FAISS', 'RAG', 'Gemini', 'LangChain'],
+    github: 'https://github.com/vrund2005/roastforge',
+  },
+  {
     title: 'RAG-based YouTube Q&A System',
     description: "Built a RAG pipeline using LangChain, FAISS, and Gemini to answer questions from video transcripts. Applied chunking and embeddings for efficient retrieval and context-aware responses.",
     tags: ['GenAI', 'FAISS', 'RAG', 'Gemini', 'LangChain'],

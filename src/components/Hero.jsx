@@ -6,8 +6,8 @@ import { FaGithub, FaLinkedinIn } from 'react-icons/fa'
 import vrundPhoto from '../assets/vrund.jpg'
 
 const roles = [
-  'Jr. Data Scientist',
-  'AI/ML Enthusiast',
+  // 'Jr. Data Scientist',
+  'AI/ML Engineer',
   'GenAI & AgenticAI',
   'Business Intelligence Explorer',
   'Power BI & n8n automation',

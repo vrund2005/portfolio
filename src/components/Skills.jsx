@@ -1,31 +1,41 @@
 import { motion as Motion } from 'framer-motion'
 
 const skillGroups = [
-  {
-    group: 'Languages',
-    skills: ['Python', 'SQL'],
+  { 
+    group: 'Languages', 
+    skills: ['Python', 'SQL'] 
   },
-  {
-    group: 'ML/DL',
-    skills: ['Scikit-learn', 'TensorFlow/Keras', 'NLP', 'Computer Vision'],
-  },
-  {
-    group: 'GenAI & LLMs',
-    skills: ['LangChain', 'LangGraph', 'RAG', 'FAISS', 'Prompt Engineering'],
-  },
-  {
-    group: 'Data & Visualization',
-    skills: ['Pandas', 'NumPy', 'Matplotlib', 'Power BI'],
-  },
-  {
-    group: 'Tools & Frameworks',
-    skills: ['n8n', 'FastAPI', 'Git/GitHub', 'Jupyter', 'Google Colab'],
-  },
-  {
-    group: 'Other',
-    skills: ['FastAPI', 'React.js'],
-  },
+  { group: 'AI/ML', skills: ['Scikit-learn', 'TensorFlow/Keras', 'NLP', 'CV'] },
+  { group: 'GenAI & LLMs', skills: ['LangChain', 'LangGraph', 'RAG', 'FAISS', 'Prompt Engineering', 'MCP'] },
+  { group: 'Data & Visualization', skills: ['Pandas', 'NumPy', 'Matplotlib', 'Power BI'] },
+  { group: 'Tools & Frameworks', skills: ['n8n', 'FastAPI', 'React', 'Git/GitHub', 'Jupyter', 'Google Colab'] },
 ]
+// const skillGroups = [
+//   {
+//     group: 'Languages',
+//     skills: ['Python', 'SQL'],
+//   },
+//   {
+//     group: 'ML/DL',
+//     skills: ['Scikit-learn', 'TensorFlow/Keras', 'NLP', 'Computer Vision'],
+//   },
+//   {
+//     group: 'GenAI & LLMs',
+//     skills: ['LangChain', 'LangGraph', 'RAG', 'FAISS', 'Prompt Engineering'],
+//   },
+//   {
+//     group: 'Data & Visualization',
+//     skills: ['Pandas', 'NumPy', 'Matplotlib', 'Power BI'],
+//   },
+//   {
+//     group: 'Tools & Frameworks',
+//     skills: ['n8n', 'FastAPI', 'Git/GitHub', 'Jupyter', 'Google Colab'],
+//   },
+//   {
+//     group: 'Other',
+//     skills: ['FastAPI', 'React.js'],
+//   },
+// ]
 
 function Skills() {
   return (

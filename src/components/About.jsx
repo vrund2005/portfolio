@@ -2,8 +2,8 @@ import { motion as Motion } from 'framer-motion'
 import vrundPhoto from '../assets/vrund2.jpeg'
 
 const stats = [
-  { value: '14+', label: 'GitHub Repos' },
-  { value: '15+', label: 'Projects' },
+  { value: '20+', label: 'GitHub Repos' },
+  { value: '25+', label: 'Projects' },
   // { value: 'Power BI', label: 'Certification' },
 ]
 
