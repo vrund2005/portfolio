@@ -2,7 +2,7 @@ export const projects = [
   {
     title: 'RoastForge — MCP-Enabled Agentic AI Resume Roaster & Rebuilder',
     description: "Built a 8-node LangGraph + FastMCP agentic workflow that parses resumes, brutally roasts weaknesses, evaluates ATS fit (0–100), iteratively rebuilds until score > 90, generates interview questions, and exports professional PDF resumes autonomously",
-    tags: ['GenAI', 'FAISS', 'RAG', 'Gemini', 'LangChain'],
+    tags: ['AgenticAI', 'FastMCP', 'LangGraph'],
     github: 'https://github.com/vrund2005/roastforge',
   },
   {
@@ -17,7 +17,7 @@ export const projects = [
     tags: ['Python', 'OpenCV', 'Computer Vision'],
     github: 'https://github.com/vrund2005/SquidGame-using-openCV',
   },
-    {
+  {
     title: 'Lead Generation Automation - n8n',
     description: "Workflow fetches 100 companies from Apify, Scrapes their LinkdIn Profiles & their Websites and generate 3 personalised emails",
     tags: ['n8n', 'Automation'],
