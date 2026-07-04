@@ -1,5 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FiArrowUp } from 'react-icons/fi'
+import { ScrollTrigger } from './lib/gsap'
+import { scrollToTop } from './lib/scroll'
+import { useLenis } from './hooks/useLenis'
+import { useReducedMotion } from './hooks/useMediaQuery'
+import Preloader from './components/fx/Preloader'
+import CustomCursor from './components/fx/CustomCursor'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -15,37 +21,49 @@ function App() {
   const [activeSection, setActiveSection] = useState('home')
   const [isScrolled, setIsScrolled] = useState(false)
   const [showBackToTop, setShowBackToTop] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const [cursorPosition, setCursorPosition] = useState({ x: -200, y: -200 })
+  const [ready, setReady] = useState(false)
+  const progressRef = useRef(null)
+  const reduced = useReducedMotion()
   const isUnknownPath = window.location.pathname !== '/'
 
+  useLenis(!isUnknownPath && !reduced)
+
+  // Scroll progress bar + navbar state — rAF-throttled, progress written
+  // straight to the DOM (no re-render per scroll frame)
   useEffect(() => {
     if (isUnknownPath) return undefined
 
-    const handleScroll = () => {
+    let ticking = false
+    const update = () => {
       const scrollTop = window.scrollY
       const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0
 
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`
       setIsScrolled(scrollTop > 20)
       setShowBackToTop(scrollTop > 400)
-      setScrollProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0)
+      ticking = false
+    }
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(update)
+      }
     }
 
-    handleScroll()
-    window.addEventListener('scroll', handleScroll, { passive: true })
-
-    return () => window.removeEventListener('scroll', handleScroll)
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [isUnknownPath])
 
+  // Active nav section
   useEffect(() => {
     if (isUnknownPath) return undefined
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
-          }
+          if (entry.isIntersecting) setActiveSection(entry.target.id)
         })
       },
       { rootMargin: '-35% 0px -55% 0px', threshold: 0.01 },
@@ -59,39 +77,38 @@ function App() {
     return () => observer.disconnect()
   }, [isUnknownPath])
 
+  // Recalculate ScrollTrigger positions once the preloader lifts
   useEffect(() => {
-    if (isUnknownPath) return undefined
-
-    const handlePointerMove = (event) => {
-      setCursorPosition({ x: event.clientX, y: event.clientY })
-    }
-
-    window.addEventListener('pointermove', handlePointerMove)
-    return () => window.removeEventListener('pointermove', handlePointerMove)
-  }, [isUnknownPath])
+    if (!ready) return undefined
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh())
+    return () => cancelAnimationFrame(raf)
+  }, [ready])
 
   if (isUnknownPath) {
     return <NotFound />
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-slate-950 text-white selection:bg-indigo-500/30 selection:text-white">
-      <div
-        className="pointer-events-none fixed left-0 top-0 z-[60] hidden h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/10 blur-3xl lg:block"
-        style={{ transform: `translate(${cursorPosition.x - 144}px, ${cursorPosition.y - 144}px)` }}
-      />
+    <div className="min-h-screen overflow-x-hidden bg-ink text-white selection:bg-violet-500/30 selection:text-white">
+      <Preloader onReveal={() => setReady(true)} />
+      <CustomCursor />
 
-      <div className="fixed left-0 top-0 z-[70] h-1 w-full bg-slate-900/80">
+      {/* Film grain overlay */}
+      <div aria-hidden="true" className="grain pointer-events-none fixed inset-0 z-[90] opacity-[0.05]" />
+
+      {/* Scroll progress */}
+      <div className="fixed left-0 top-0 z-[70] h-0.5 w-full bg-white/5">
         <div
-          className="h-full rounded-r-full bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-300 transition-[width] duration-150"
-          style={{ width: `${scrollProgress}%` }}
+          ref={progressRef}
+          className="h-full w-full origin-left bg-gradient-to-r from-violet-500 via-indigo-400 to-cyan-300 will-change-transform"
+          style={{ transform: 'scaleX(0)' }}
         />
       </div>
 
       <Navbar activeSection={activeSection} isScrolled={isScrolled} />
 
       <main>
-        <Hero />
+        <Hero started={ready} />
         <About />
         <Skills />
         <Projects />
@@ -103,12 +120,12 @@ function App() {
       <button
         type="button"
         aria-label="Back to top"
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className={`fixed bottom-6 right-6 z-50 grid h-12 w-12 place-items-center rounded-full border border-white/10 bg-indigo-500 text-white shadow-2xl shadow-indigo-500/30 transition duration-300 hover:-translate-y-1 hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 ${
-          showBackToTop ? 'translate-y-0 opacity-100' : 'translate-y-6 pointer-events-none opacity-0'
+        onClick={scrollToTop}
+        className={`glass fixed bottom-6 right-6 z-50 grid h-12 w-12 place-items-center rounded-full text-white shadow-2xl shadow-violet-950/40 transition duration-300 hover:-translate-y-1 hover:border-violet-400/50 hover:bg-violet-500/20 focus:outline-none focus:ring-2 focus:ring-violet-300 ${
+          showBackToTop ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-6 opacity-0'
         }`}
       >
-        <FiArrowUp size={22} />
+        <FiArrowUp size={20} />
       </button>
     </div>
   )

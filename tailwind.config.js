@@ -5,10 +5,13 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
         charcoal: '#0f172a',
-        accent: '#6366f1',
+        ink: '#05060f',
+        accent: '#8b5cf6',
+        'accent-2': '#22d3ee',
       },
     },
   },

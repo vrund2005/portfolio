@@ -1,12 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+  --bg: #05060f;
+  --accent: #8b5cf6;
+  --accent-2: #22d3ee;
   color: #ffffff;
-  background: #0f172a;
+  background: var(--bg);
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,15 +22,15 @@
 }
 
 html {
-  scroll-behavior: smooth;
-  background: #0f172a;
+  background: var(--bg);
 }
 
 body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background: #0f172a;
+  background: var(--bg);
+  overflow-x: hidden;
 }
 
 button,
@@ -35,4 +38,119 @@ a,
 input,
 textarea {
   font: inherit;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #05060f;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272f;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f4b;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- Custom cursor ---------- */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body.has-custom-cursor,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button,
+  body.has-custom-cursor input,
+  body.has-custom-cursor textarea,
+  body.has-custom-cursor label {
+    cursor: none;
+  }
+}
+
+/* ---------- Grain overlay ---------- */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+
+/* ---------- Marquee ---------- */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 28s) linear infinite;
+}
+
+/* ---------- Aurora gradient blobs (transform + opacity only) ---------- */
+@keyframes blob-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(4%, -6%, 0) scale(1.08);
+  }
+  66% {
+    transform: translate3d(-5%, 4%, 0) scale(0.94);
+  }
+}
+.animate-blob {
+  animation: blob-drift 16s ease-in-out infinite;
+}
+.animate-blob-slow {
+  animation: blob-drift 24s ease-in-out infinite reverse;
+}
+
+/* ---------- Link underline sweep ---------- */
+.link-sweep {
+  position: relative;
+}
+.link-sweep::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1.5px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.link-sweep:hover::after,
+.link-sweep.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ---------- Glassmorphism helper ---------- */
+.glass {
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- Reduced motion: kill decorative animation ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-blob,
+  .animate-blob-slow {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }

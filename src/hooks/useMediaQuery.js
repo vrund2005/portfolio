@@ -1,0 +1,18 @@
+import { useCallback, useSyncExternalStore } from 'react'
+
+export function useMediaQuery(query) {
+  const subscribe = useCallback(
+    (callback) => {
+      const mq = window.matchMedia(query)
+      mq.addEventListener('change', callback)
+      return () => mq.removeEventListener('change', callback)
+    },
+    [query],
+  )
+
+  return useSyncExternalStore(subscribe, () => window.matchMedia(query).matches)
+}
+
+export const useReducedMotion = () => useMediaQuery('(prefers-reduced-motion: reduce)')
+export const useIsDesktop = () => useMediaQuery('(min-width: 1024px)')
+export const useFinePointer = () => useMediaQuery('(pointer: fine)')
