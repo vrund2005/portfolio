@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(OUT=\"/private/tmp/claude-501/-Users-vrund-Desktop-Self-Learning-and-Projects-Portfolio/0e1a7b07-3cd7-41a7-a333-a30774c5e327/scratchpad\" node \"/private/tmp/claude-501/-Users-vrund-Desktop-Self-Learning-and-Projects-Portfolio/0e1a7b07-3cd7-41a7-a333-a30774c5e327/scratchpad/shot.mjs\")",
+      "Bash(pkill -f \"vite preview\")"
+    ]
+  }
+}

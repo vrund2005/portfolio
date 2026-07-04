@@ -15,7 +15,9 @@ const roles = [
   // 'Jr. Data Scientist',
   'AI/ML Engineer',
   'GenAI & AgenticAI',
+  'Computer Vision Expert',
   'Business Intelligence Explorer',
+  'AWS Cloud Services',
   'Power BI & n8n automation',
 ]
 

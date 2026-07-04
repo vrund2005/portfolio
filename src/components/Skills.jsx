@@ -3,12 +3,10 @@ import SplitText from './fx/SplitText'
 import Marquee from './fx/Marquee'
 
 const skillGroups = [
-  {
-    group: 'Languages',
-    skills: ['Python', 'SQL'],
-  },
-  { group: 'AI/ML', skills: ['Scikit-learn', 'TensorFlow/Keras', 'NLP', 'CV'] },
+  { group: 'Languages', skills: ['Python', 'SQL'] },
+  { group: 'Cloud & MLOps', skills: ['AWS (SageMaker, Lambda, S3, CloudWatch, IAM, EC2)'] },
   { group: 'GenAI & LLMs', skills: ['LangChain', 'LangGraph', 'RAG', 'FAISS', 'Prompt Engineering', 'MCP'] },
+  { group: 'AI/ML', skills: ['Scikit-learn', 'TensorFlow/Keras', 'OpenCV', 'NLP', 'Computer Vision'] },
   { group: 'Data & Visualization', skills: ['Pandas', 'NumPy', 'Matplotlib', 'Power BI'] },
   { group: 'Tools & Frameworks', skills: ['n8n', 'FastAPI', 'React', 'Git/GitHub', 'Jupyter', 'Google Colab'] },
 ]
