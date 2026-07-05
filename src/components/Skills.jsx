@@ -1,6 +1,7 @@
 import FadeIn from './fx/FadeIn'
 import SplitText from './fx/SplitText'
 import Marquee from './fx/Marquee'
+import GhostWord from './fx/GhostWord'
 
 const skillGroups = [
   { group: 'Languages', skills: ['Python', 'SQL'] },
@@ -16,15 +17,16 @@ const allSkills = skillGroups.flatMap((group) => group.skills)
 function Skills() {
   return (
     <section id="skills" className="relative overflow-hidden py-24">
+      <GhostWord direction={-1}>STACK</GhostWord>
       <div
         aria-hidden="true"
-        className="animate-blob absolute -left-40 bottom-0 h-96 w-96 rounded-full bg-cyan-500/[0.07] blur-3xl will-change-transform"
+        className="animate-blob absolute -left-40 bottom-0 h-96 w-96 rounded-full bg-emerald-500/[0.06] blur-3xl will-change-transform"
       />
 
       <div className="relative">
         <div className="mb-14 px-5 text-center sm:px-6 lg:px-8">
-          <FadeIn as="p" className="text-sm font-semibold uppercase tracking-[0.3em] text-violet-300">
-            Skills
+          <FadeIn as="p" className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-300">
+            Skills · optimizing the stack
           </FadeIn>
           <SplitText as="h2" className="mt-3 font-display text-3xl font-bold text-white sm:text-4xl" stagger={0.015}>
             Practical tools for data problems

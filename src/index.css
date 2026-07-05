@@ -135,11 +135,18 @@ textarea {
   transform-origin: left;
 }
 
+/* ---------- Ghost section words (outlined, scroll-drifting) ---------- */
+.ghost-word {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.07);
+}
+
 /* ---------- Glassmorphism helper ---------- */
+/* Dark-tinted glass: keeps text readable over the bright particle scene */
 .glass {
-  background: rgba(255, 255, 255, 0.035);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(9, 11, 22, 0.58);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 

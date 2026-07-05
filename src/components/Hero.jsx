@@ -1,15 +1,12 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { FiDownload } from 'react-icons/fi'
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa'
 import { gsap } from '../lib/gsap'
 import { scrollToId } from '../lib/scroll'
-import { useIsDesktop, useReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useMediaQuery'
 import SplitText from './fx/SplitText'
 import Magnetic from './fx/Magnetic'
 import vrundPhoto from '../assets/vrund.jpg'
-
-// Three.js scene is lazy-loaded so it never blocks first paint
-const HeroScene = lazy(() => import('./fx/HeroScene'))
 
 const roles = [
   // 'Jr. Data Scientist',
@@ -25,16 +22,12 @@ function Hero({ started = true }) {
   const [roleIndex, setRoleIndex] = useState(0)
   const [displayText, setDisplayText] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
-  const [sceneVisible, setSceneVisible] = useState(true)
   const sectionRef = useRef(null)
   const introRef = useRef(null)
   const photoRef = useRef(null)
   const contentRef = useRef(null)
   const reduced = useReducedMotion()
-  const isDesktop = useIsDesktop()
   const currentRole = useMemo(() => roles[roleIndex], [roleIndex])
-
-  const show3D = started && isDesktop && !reduced
 
   // Typewriter (unchanged)
   useEffect(() => {
@@ -60,30 +53,6 @@ function Hero({ started = true }) {
 
     return () => window.clearTimeout(timeout)
   }, [currentRole, displayText, isDeleting])
-
-  // Pause the 3D scene when the hero is off-screen or the tab is hidden
-  useEffect(() => {
-    if (!show3D) return undefined
-
-    const el = sectionRef.current
-    let inView = true
-
-    const apply = () => setSceneVisible(inView && !document.hidden)
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        inView = entry.isIntersecting
-        apply()
-      },
-      { threshold: 0 },
-    )
-    observer.observe(el)
-    document.addEventListener('visibilitychange', apply)
-
-    return () => {
-      observer.disconnect()
-      document.removeEventListener('visibilitychange', apply)
-    }
-  }, [show3D])
 
   // Intro reveal after preloader + scroll parallax
   useEffect(() => {
@@ -138,26 +107,13 @@ function Hero({ started = true }) {
       ref={sectionRef}
       className="relative flex min-h-screen items-center overflow-hidden px-5 pt-10 sm:px-6 md:pt-24 lg:px-8"
     >
-      {/* Layered background: base gradient + dot matrix + aurora blobs */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.16),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(34,211,238,0.08),transparent_45%),linear-gradient(135deg,#0b0d1c_0%,#080a16_48%,#05060f_100%)]" />
-      <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(rgba(255,255,255,0.25)_1px,transparent_1px)] [background-size:34px_34px] [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_75%)]" />
+      {/* Translucent scrim + dot matrix — the global 3D scene shows through */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.14),transparent_40%),linear-gradient(135deg,rgba(11,13,28,0.5)_0%,rgba(5,6,15,0.2)_100%)]" />
+      <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(rgba(255,255,255,0.25)_1px,transparent_1px)] [background-size:34px_34px] [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_75%)]" />
       <div
         aria-hidden="true"
-        className="animate-blob absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-violet-600/15 blur-3xl will-change-transform"
+        className="animate-blob absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-violet-600/10 blur-3xl will-change-transform"
       />
-      <div
-        aria-hidden="true"
-        className="animate-blob-slow absolute -right-24 bottom-1/4 h-80 w-80 rounded-full bg-cyan-500/10 blur-3xl will-change-transform"
-      />
-
-      {/* Lazy 3D particle field (desktop, motion-safe only) */}
-      {show3D && (
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <Suspense fallback={null}>
-            <HeroScene active={sceneVisible} />
-          </Suspense>
-        </div>
-      )}
 
       <div
         ref={introRef}

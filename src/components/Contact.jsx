@@ -1,6 +1,7 @@
 import FadeIn from './fx/FadeIn'
 import SplitText from './fx/SplitText'
 import Magnetic from './fx/Magnetic'
+import GhostWord from './fx/GhostWord'
 
 function Contact() {
   const handleSubmit = (event) => {
@@ -23,15 +24,16 @@ function Contact() {
 
   return (
     <section id="contact" className="relative overflow-hidden px-5 py-24 sm:px-6 lg:px-8">
+      <GhostWord>HELLO</GhostWord>
       <div
         aria-hidden="true"
-        className="animate-blob absolute -right-32 top-10 h-80 w-80 rounded-full bg-violet-600/10 blur-3xl will-change-transform"
+        className="animate-blob absolute -right-32 top-10 h-80 w-80 rounded-full bg-rose-500/[0.08] blur-3xl will-change-transform"
       />
 
       <div className="relative mx-auto max-w-4xl">
         <div className="mb-14 text-center">
-          <FadeIn as="p" className="text-sm font-semibold uppercase tracking-[0.3em] text-violet-300">
-            Contact
+          <FadeIn as="p" className="text-sm font-semibold uppercase tracking-[0.3em] text-rose-300">
+            Contact · connection open
           </FadeIn>
           <SplitText as="h2" className="mt-3 font-display text-3xl font-bold text-white sm:text-4xl" stagger={0.02}>
             Let's connect
@@ -80,7 +82,7 @@ function Contact() {
             <Magnetic className="mt-6 w-full sm:w-auto">
               <button
                 type="submit"
-                className="inline-flex h-12 w-full items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-indigo-500 px-8 font-bold text-white shadow-xl shadow-violet-500/25 transition duration-300 hover:shadow-2xl hover:shadow-violet-500/40 hover:brightness-110 sm:w-auto"
+                className="inline-flex h-12 w-full items-center justify-center rounded-full bg-gradient-to-r from-rose-500 to-fuchsia-500 px-8 font-bold text-white shadow-xl shadow-rose-500/25 transition duration-300 hover:shadow-2xl hover:shadow-rose-500/40 hover:brightness-110 sm:w-auto"
               >
                 Send Message
               </button>

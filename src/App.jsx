@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { FiArrowUp } from 'react-icons/fi'
 import { ScrollTrigger } from './lib/gsap'
 import { scrollToTop } from './lib/scroll'
@@ -6,6 +6,7 @@ import { useLenis } from './hooks/useLenis'
 import { useReducedMotion } from './hooks/useMediaQuery'
 import Preloader from './components/fx/Preloader'
 import CustomCursor from './components/fx/CustomCursor'
+import ScrollHud from './components/ScrollHud'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -14,6 +15,9 @@ import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import NotFound from './404'
+
+// Global morphing 3D scene is lazy-loaded so it never blocks first paint
+const ScrollScene = lazy(() => import('./components/fx/ScrollScene'))
 
 const sections = ['home', 'about', 'skills', 'projects', 'contact']
 
@@ -93,6 +97,13 @@ function App() {
       <Preloader onReveal={() => setReady(true)} />
       <CustomCursor />
 
+      {/* Scroll-morphing 3D particle scene, fixed behind all content */}
+      {ready && !reduced && (
+        <Suspense fallback={null}>
+          <ScrollScene />
+        </Suspense>
+      )}
+
       {/* Film grain overlay */}
       <div aria-hidden="true" className="grain pointer-events-none fixed inset-0 z-[90] opacity-[0.05]" />
 
@@ -106,8 +117,9 @@ function App() {
       </div>
 
       <Navbar activeSection={activeSection} isScrolled={isScrolled} />
+      <ScrollHud activeSection={activeSection} />
 
-      <main>
+      <main className="relative z-10">
         <Hero started={ready} />
         <About />
         <Skills />
@@ -115,7 +127,9 @@ function App() {
         <Contact />
       </main>
 
-      <Footer />
+      <div className="relative z-10">
+        <Footer />
+      </div>
 
       <button
         type="button"

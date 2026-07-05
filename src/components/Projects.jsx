@@ -91,8 +91,8 @@ function Projects() {
 
   const heading = (
     <div className={horizontal ? 'px-5 sm:px-6 lg:px-16' : 'mb-14 px-5 text-center sm:px-6 lg:px-8'}>
-      <FadeIn as="p" className="text-sm font-semibold uppercase tracking-[0.3em] text-violet-300">
-        Projects
+      <FadeIn as="p" className="text-sm font-semibold uppercase tracking-[0.3em] text-amber-300">
+        Projects · shipping
       </FadeIn>
       <SplitText as="h2" className="mt-3 font-display text-3xl font-bold text-white sm:text-4xl" stagger={0.015}>
         Selected work

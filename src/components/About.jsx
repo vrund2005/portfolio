@@ -4,6 +4,7 @@ import { useReducedMotion } from '../hooks/useMediaQuery'
 import SplitText from './fx/SplitText'
 import FadeIn from './fx/FadeIn'
 import TiltCard from './fx/TiltCard'
+import GhostWord from './fx/GhostWord'
 
 const stats = [
   { value: '30+', label: 'GitHub Repos' },
@@ -247,15 +248,16 @@ function About() {
 
   return (
     <section id="about" ref={sectionRef} className="relative overflow-hidden px-5 py-24 sm:px-6 lg:px-8">
+      <GhostWord>MODEL</GhostWord>
       <div
         aria-hidden="true"
-        className="animate-blob-slow absolute -right-40 top-1/3 h-96 w-96 rounded-full bg-violet-600/10 blur-3xl will-change-transform"
+        className="animate-blob-slow absolute -right-40 top-1/3 h-96 w-96 rounded-full bg-cyan-500/[0.07] blur-3xl will-change-transform"
       />
 
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-14 text-center">
-          <FadeIn as="p" className="text-sm font-semibold uppercase tracking-[0.3em] text-violet-300">
-            About
+          <FadeIn as="p" className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
+            About · training the model
           </FadeIn>
           <SplitText as="h2" className="mt-3 font-display text-3xl font-bold text-white sm:text-4xl" stagger={0.015}>
             From notebooks to production
