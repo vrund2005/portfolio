@@ -7,7 +7,7 @@ import TiltCard from './fx/TiltCard'
 import GhostWord from './fx/GhostWord'
 
 const stats = [
-  { value: '30+', label: 'GitHub Repos' },
+  { value: '85+', label: 'GitHub Stars' },
   { value: '35+', label: 'Projects' },
   { value: '2', label: 'Internships' },
 ]
