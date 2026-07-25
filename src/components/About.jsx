@@ -264,7 +264,7 @@ function About() {
           </SplitText>
         </div>
 
-        <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
           <FadeIn className="mx-auto w-full max-w-xl">
             <CodeCard />
           </FadeIn>
