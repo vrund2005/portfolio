@@ -1,3 +1,14 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "trailingSlash": false,
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [{ "key": "X-Content-Type-Options", "value": "nosniff" }]
+    },
+    {
+      "source": "/(sitemap.xml|rss.xml|llms.txt|robots.txt)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, s-maxage=3600" }]
+    }
+  ]
 }

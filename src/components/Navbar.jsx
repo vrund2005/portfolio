@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { scrollToId } from '../lib/scroll'
 import Magnetic from './fx/Magnetic'
@@ -8,6 +9,7 @@ const navItems = [
   { label: 'About', to: 'about' },
   { label: 'Skills', to: 'skills' },
   { label: 'Projects', to: 'projects' },
+  { label: 'Hire Me', to: 'hire' },
   { label: 'Contact', to: 'contact' },
 ]
 
@@ -58,6 +60,12 @@ function Navbar({ activeSection, isScrolled }) {
               {item.label}
             </button>
           ))}
+          <Link
+            to="/blog"
+            className="link-sweep cursor-pointer py-2 text-sm font-medium text-slate-400 transition-colors duration-300 hover:text-white"
+          >
+            Blog
+          </Link>
         </div>
 
         <button
@@ -91,6 +99,13 @@ function Navbar({ activeSection, isScrolled }) {
               {item.label}
             </button>
           ))}
+          <Link
+            to="/blog"
+            onClick={() => setIsOpen(false)}
+            className="cursor-pointer rounded-lg px-4 py-2.5 text-left text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
+          >
+            Blog
+          </Link>
         </div>
       </div>
     </header>

@@ -1,3 +1,5 @@
+import typography from '@tailwindcss/typography'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
@@ -6,6 +8,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['Newsreader', 'Charter', 'Georgia', 'Cambria', 'serif'],
       },
       colors: {
         charcoal: '#0f172a',
@@ -15,5 +18,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [typography],
 }

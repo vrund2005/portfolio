@@ -6,10 +6,12 @@ import GhostWord from './fx/GhostWord'
 const skillGroups = [
   { group: 'Languages', skills: ['Python', 'SQL'] },
   { group: 'Cloud & MLOps', skills: ['AWS (SageMaker, Lambda, S3, CloudWatch, IAM, EC2)'] },
-  { group: 'GenAI & LLMs', skills: ['LangChain', 'LangGraph', 'RAG', 'FAISS', 'Prompt Engineering', 'MCP'] },
-  { group: 'AI/ML', skills: ['Scikit-learn', 'TensorFlow/Keras', 'OpenCV', 'NLP', 'Computer Vision'] },
-  { group: 'Data & Visualization', skills: ['Pandas', 'NumPy', 'Matplotlib', 'Power BI'] },
-  { group: 'Tools & Frameworks', skills: ['n8n', 'FastAPI', 'React', 'Git/GitHub', 'Jupyter', 'Google Colab'] },
+  { group: 'GenAI & AgenticAI', skills: ['LangChain', 'LangGraph', 'LangSmith', 'RAG', 'FAISS', 'Prompt Engineering', 'MCP', 'Hugging Face'] },
+  { group: 'Computer Vision', skills: ["OpenCV", "YOLO", "Roboflow", "Transfer Learning", "Fine Tuning", "Data Annotation", "Object Detection", "Image Classification", "Image Segmentation"] },
+  { group: 'Machine Learning & Deep Learning', skills: ['Scikit-learn', 'TensorFlow', 'Keras', 'CNNs', 'LSTMs', 'Transformers', 'Feature Engineering', 'Model Evaluation', 'NLP'] },
+  { group: 'Data Science', skills: ['Pandas', 'Numpy', 'Matplotlib', 'Power BI'] },
+  { group: 'Developer Tools', skills: ['Git', 'GitHub', 'Jupyter', 'Google Colab', 'n8n'] },
+  { group: 'Developer Tools', skills: ['FastAPI', 'React', 'R', 'Java', 'JavaScript'] },
 ]
 
 const allSkills = skillGroups.flatMap((group) => group.skills)
@@ -35,7 +37,7 @@ function Skills() {
 
         {/* Infinite tech-stack marquee */}
         <FadeIn className="mb-14 border-y border-white/5 py-5">
-          <Marquee items={allSkills} duration={30} />
+          <Marquee items={allSkills} duration={75} />
         </FadeIn>
 
         <div className="mx-auto grid max-w-6xl gap-6 px-5 sm:px-6 md:grid-cols-2 lg:px-8">

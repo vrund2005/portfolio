@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
-import { FiExternalLink } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
+import { FiArrowRight, FiExternalLink } from 'react-icons/fi'
 import { FaGithub } from 'react-icons/fa'
 import { gsap, ScrollTrigger } from '../lib/gsap'
 import { useIsDesktop, useReducedMotion } from '../hooks/useMediaQuery'
@@ -41,15 +42,26 @@ function ProjectCard({ project, className = '' }) {
           ))}
         </div>
 
-        <a
-          href={project.github}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-7 inline-flex h-11 w-fit items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-bold text-slate-950 transition duration-300 hover:bg-gradient-to-r hover:from-violet-300 hover:to-cyan-200"
-        >
-          <FaGithub />
-          View on GitHub
-        </a>
+        <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-11 w-fit items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-bold text-slate-950 transition duration-300 hover:bg-gradient-to-r hover:from-violet-300 hover:to-cyan-200"
+          >
+            <FaGithub />
+            View on GitHub
+          </a>
+          {project.blog && (
+            <Link
+              to={`/blog/${project.blog}`}
+              className="group/blog inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 transition-colors duration-300 hover:text-cyan-200"
+            >
+              Read the deep dive
+              <FiArrowRight className="transition-transform duration-300 group-hover/blog:translate-x-1" />
+            </Link>
+          )}
+        </div>
       </article>
     </TiltCard>
   )

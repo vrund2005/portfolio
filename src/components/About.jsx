@@ -5,9 +5,10 @@ import SplitText from './fx/SplitText'
 import FadeIn from './fx/FadeIn'
 import TiltCard from './fx/TiltCard'
 import GhostWord from './fx/GhostWord'
+import ShipPipeline from './fx/ShipPipeline'
 
 const stats = [
-  { value: '85+', label: 'GitHub Stars' },
+  { value: '95+', label: 'GitHub Stars' },
   { value: '35+', label: 'Projects' },
   { value: '2', label: 'Internships' },
 ]
@@ -170,51 +171,6 @@ function CodeCard() {
   )
 }
 
-function ContributionGrid() {
-  const gridRef = useRef(null)
-  const reduced = useReducedMotion()
-
-  const cells = Array.from({ length: 84 }, (_, index) => {
-    const levels = ['bg-slate-800', 'bg-indigo-900/60', 'bg-indigo-600/70', 'bg-cyan-400/80']
-    const level = (index * 7 + index.toString().charCodeAt(0)) % levels.length
-    return levels[level]
-  })
-
-  useEffect(() => {
-    if (reduced) return undefined
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.cg-cell',
-        { opacity: 0.1, scale: 0.6 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.35,
-          ease: 'power2.out',
-          stagger: { each: 0.008, from: 'start' },
-          scrollTrigger: { trigger: gridRef.current, start: 'top 88%', once: true },
-        },
-      )
-    }, gridRef)
-
-    return () => ctx.revert()
-  }, [reduced])
-
-  return (
-    <div ref={gridRef}>
-      <div className="mb-3 flex items-center justify-between text-xs">
-        <span className="font-semibold uppercase tracking-[0.2em] text-slate-400">Commit rhythm</span>
-        <span className="text-slate-500">always shipping</span>
-      </div>
-      <div aria-hidden="true" className="grid grid-cols-12 gap-1.5">
-        {cells.map((cell, index) => (
-          <span key={index} className={`cg-cell h-3 rounded-[3px] ${cell}`} />
-        ))}
-      </div>
-    </div>
-  )
-}
 
 function About() {
   const sectionRef = useRef(null)
@@ -308,7 +264,7 @@ function About() {
             </div>
 
             <FadeIn delay={0.3} className="glass mt-8 rounded-xl p-5">
-              <ContributionGrid />
+              <ShipPipeline />
             </FadeIn>
           </div>
         </div>

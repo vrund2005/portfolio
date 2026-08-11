@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "node node_modules/vite/bin/vite.js",
-    "build": "node node_modules/vite/bin/vite.js build",
+    "build": "node node_modules/vite/bin/vite.js build && node scripts/generate-seo.mjs && node scripts/prerender.mjs",
+    "vercel-build": "npx playwright install chromium && npm run build",
+    "build:only": "node node_modules/vite/bin/vite.js build",
     "lint": "node node_modules/eslint/bin/eslint.js .",
     "preview": "node node_modules/vite/bin/vite.js preview"
   },
@@ -14,12 +16,18 @@
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.0",
     "@studio-freight/lenis": "^1.0.42",
+    "@tailwindcss/typography": "^0.5.20",
+    "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.38.0",
     "gsap": "^3.15.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-icons": "^5.6.0",
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.18.2",
     "react-scroll": "^1.9.3",
+    "rehype-highlight": "^7.0.2",
+    "remark-gfm": "^4.0.1",
     "three": "^0.184.0"
   },
   "devDependencies": {

@@ -15,7 +15,6 @@ const roles = [
   'Computer Vision Expert',
   'Business Intelligence Explorer',
   'AWS Cloud Services',
-  'Power BI & n8n automation',
 ]
 
 function Hero({ started = true }) {
@@ -125,7 +124,7 @@ function Hero({ started = true }) {
               hiddenBeforeIntro ? 'opacity-0' : ''
             }`}
           >
-            CSE (Data Science) at VGEC
+            CSE (Data Science) from VGEC'26
           </p>
 
           <h1 className="font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-7xl">

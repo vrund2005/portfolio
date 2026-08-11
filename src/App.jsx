@@ -12,14 +12,16 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
+import Writing from './components/Writing'
+import Hire from './components/Hire'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import NotFound from './404'
+import { applySeo, breadcrumbJsonLd } from './lib/seo'
 
 // Global morphing 3D scene is lazy-loaded so it never blocks first paint
 const ScrollScene = lazy(() => import('./components/fx/ScrollScene'))
 
-const sections = ['home', 'about', 'skills', 'projects', 'contact']
+const sections = ['home', 'about', 'skills', 'projects', 'blog', 'hire', 'contact']
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
@@ -28,15 +30,23 @@ function App() {
   const [ready, setReady] = useState(false)
   const progressRef = useRef(null)
   const reduced = useReducedMotion()
-  const isUnknownPath = window.location.pathname !== '/'
 
-  useLenis(!isUnknownPath && !reduced)
+  useLenis(!reduced)
+
+  useEffect(() => {
+    applySeo({
+      title: 'Vrund Patel — AI/ML Engineer | Agentic AI, Computer Vision & GenAI',
+      description:
+        'Vrund Patel is an AI/ML engineer building Agentic AI, computer vision and GenAI systems that reach production. CSE (Data Science) at VGEC, with internships at iQudTek and Bacancy. See projects, deep-dive writing, and how to hire him.',
+      path: '/',
+      type: 'profile',
+      jsonLd: breadcrumbJsonLd([{ name: 'Home', path: '/' }]),
+    })
+  }, [])
 
   // Scroll progress bar + navbar state — rAF-throttled, progress written
   // straight to the DOM (no re-render per scroll frame)
   useEffect(() => {
-    if (isUnknownPath) return undefined
-
     let ticking = false
     const update = () => {
       const scrollTop = window.scrollY
@@ -58,12 +68,10 @@ function App() {
     update()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [isUnknownPath])
+  }, [])
 
   // Active nav section
   useEffect(() => {
-    if (isUnknownPath) return undefined
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -79,7 +87,7 @@ function App() {
     })
 
     return () => observer.disconnect()
-  }, [isUnknownPath])
+  }, [])
 
   // Recalculate ScrollTrigger positions once the preloader lifts
   useEffect(() => {
@@ -87,10 +95,6 @@ function App() {
     const raf = requestAnimationFrame(() => ScrollTrigger.refresh())
     return () => cancelAnimationFrame(raf)
   }, [ready])
-
-  if (isUnknownPath) {
-    return <NotFound />
-  }
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-ink text-white selection:bg-violet-500/30 selection:text-white">
@@ -124,6 +128,8 @@ function App() {
         <About />
         <Skills />
         <Projects />
+        <Writing />
+        <Hire />
         <Contact />
       </main>
 

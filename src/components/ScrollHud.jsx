@@ -11,6 +11,8 @@ const railItems = [
   { id: 'about', label: 'Model', dot: 'bg-cyan-300', glow: 'shadow-cyan-300/60' },
   { id: 'skills', label: 'Stack', dot: 'bg-emerald-300', glow: 'shadow-emerald-300/60' },
   { id: 'projects', label: 'Ship', dot: 'bg-amber-300', glow: 'shadow-amber-300/60' },
+  { id: 'blog', label: 'Write', dot: 'bg-sky-300', glow: 'shadow-sky-300/60' },
+  { id: 'hire', label: 'Deploy', dot: 'bg-fuchsia-300', glow: 'shadow-fuchsia-300/60' },
   { id: 'contact', label: 'Connect', dot: 'bg-rose-300', glow: 'shadow-rose-300/60' },
 ]
 
@@ -19,7 +21,9 @@ const phases = {
   about: { num: '02', label: 'training the model', color: 'text-cyan-300' },
   skills: { num: '03', label: 'optimizing the stack', color: 'text-emerald-300' },
   projects: { num: '04', label: 'shipping projects', color: 'text-amber-300' },
-  contact: { num: '05', label: 'connection open', color: 'text-rose-300' },
+  blog: { num: '05', label: 'publishing the docs', color: 'text-sky-300' },
+  hire: { num: '06', label: 'ready to deploy', color: 'text-fuchsia-300' },
+  contact: { num: '07', label: 'connection open', color: 'text-rose-300' },
 }
 
 function ScrollHud({ activeSection }) {
@@ -66,7 +70,7 @@ function ScrollHud({ activeSection }) {
       >
         <span className="text-slate-600">[</span>
         <span className={phase.color}>{phase.num}</span>
-        <span className="text-slate-600">/05 ]</span>
+        <span className="text-slate-600">/07 ]</span>
         <span className={`transition-colors duration-500 ${phase.color}`}>{phase.label}</span>
         <span className={`inline-block h-3 w-1.5 animate-pulse ${phase.color.replace('text-', 'bg-')}`} />
       </div>
