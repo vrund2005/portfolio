@@ -78,14 +78,19 @@ const server = await startServer()
 
 let browser
 try {
-  browser = await chromium.launch()
+  browser = await chromium.launch({
+    // CI images (Vercel included) build as root, where Chromium exits on
+    // startup unless the sandbox is disabled, and /dev/shm is too small for
+    // its default shared-memory use.
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
+  })
 } catch (error) {
   // Never fail a deploy over this. Without prerendering the site still ships
   // its JSON-LD graph and <noscript> summary, so crawlers are not empty-handed.
   server.close()
   console.warn('\n⚠️  Prerendering skipped — could not launch Chromium.')
-  console.warn('   Run `npx playwright install chromium` to enable it.')
-  console.warn(`   (${error.message.split('\n')[0]})\n`)
+  console.warn('   Run `npx playwright install --with-deps chromium` to enable it.')
+  console.warn(`   ${error.message.split('\n').slice(0, 4).join('\n   ')}\n`)
   process.exit(0)
 }
 

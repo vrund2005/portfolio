@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node node_modules/vite/bin/vite.js",
     "build": "node node_modules/vite/bin/vite.js build && node scripts/generate-seo.mjs && node scripts/prerender.mjs",
-    "vercel-build": "npx playwright install chromium && npm run build",
+    "vercel-build": "npx playwright install --with-deps chromium || npx playwright install chromium; npm run build",
     "build:only": "node node_modules/vite/bin/vite.js build",
     "lint": "node node_modules/eslint/bin/eslint.js .",
     "preview": "node node_modules/vite/bin/vite.js preview"
