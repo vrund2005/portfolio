@@ -7,7 +7,7 @@ import CoverArt from './blog/CoverArt'
 import { posts, formatDate, accentFor } from '../lib/posts'
 
 function WritingCard({ post }) {
-  const accent = accentFor(post.slug)
+  const accent = accentFor(post.slug, post.accentName)
 
   return (
     <article className="glass group flex h-full flex-col overflow-hidden rounded-2xl shadow-xl shadow-black/20 transition duration-300 hover:-translate-y-1 hover:border-sky-300/40">

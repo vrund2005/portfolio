@@ -23,10 +23,11 @@ const MOTIF_TAGS = {
   pipeline: ['n8n', 'automation', 'etl', 'pipeline', 'workflow', 'airflow', 'scraping', 'api', 'fastapi'],
   vision: ['computer vision', 'opencv', 'cnn', 'yolo', 'mediapipe', 'image classification', 'whisper'],
   chart: ['power bi', 'powerbi', 'dashboard', 'business intelligence', 'data visualization', 'tableau', 'analytics', 'sql', 'ml', 'nlp'],
+  vector: ['vector', 'vector database', 'vectordb', 'hnsw', 'ivf', 'ann', 'pgvector', 'qdrant', 'pinecone', 'weaviate', 'milvus', 'index'],
 }
 
 // Tie-break order when two motifs score equally — fixed, so it never drifts
-const MOTIF_PRIORITY = ['graph', 'retrieval', 'vision', 'pipeline', 'chart', 'flow']
+const MOTIF_PRIORITY = ['graph', 'vector', 'retrieval', 'vision', 'pipeline', 'chart', 'flow']
 
 function pickKind(art, tags = []) {
   if (art && MOTIF_PRIORITY.includes(art)) return art
@@ -326,6 +327,112 @@ function ChartArt({ c2, gid }) {
   )
 }
 
+/* ---------- vector: an HNSW-style layered index, searched top-down ---------- */
+
+// Sparse at the top, dense at the bottom — how a hierarchical ANN index is built
+const LAYERS = [
+  { y: 58, xs: [232, 300, 368, 436], r: 3.6 },
+  { y: 110, xs: [200, 246, 292, 338, 384, 430, 470], r: 3.2 },
+  { y: 162, xs: [180, 213, 246, 279, 312, 345, 378, 411, 444, 477], r: 2.8 },
+]
+
+// The greedy descent: entry point → closer node one level down → nearest neighbour
+const DESCENT = ['M232,58 L292,110', 'M292,110 L312,162']
+
+function VectorArt({ c1, c2, gid }) {
+  return (
+    <>
+      {/* layer plates */}
+      {LAYERS.map((layer, i) => (
+        <g key={layer.y}>
+          <line
+            x1={layer.xs[0] - 26}
+            y1={layer.y}
+            x2={layer.xs[layer.xs.length - 1] + 26}
+            y2={layer.y}
+            stroke={c1}
+            strokeWidth="0.7"
+            opacity={0.14 + i * 0.04}
+          />
+          <text
+            x={layer.xs[0] - 40}
+            y={layer.y + 3.5}
+            fill={c1}
+            opacity="0.4"
+            fontSize="8"
+            fontFamily="ui-monospace, monospace"
+            textAnchor="end"
+          >
+            L{LAYERS.length - 1 - i}
+          </text>
+        </g>
+      ))}
+
+      {/* intra-layer neighbour links */}
+      <g stroke={c1} strokeWidth="0.7" opacity="0.22">
+        {LAYERS.map((layer) =>
+          layer.xs.slice(0, -1).map((x, i) => (
+            <line key={`${layer.y}-${x}`} x1={x} y1={layer.y} x2={layer.xs[i + 1]} y2={layer.y} />
+          )),
+        )}
+      </g>
+
+      {/* nodes */}
+      {LAYERS.map((layer, li) =>
+        layer.xs.map((x, i) => (
+          <circle
+            key={`${layer.y}-${x}-n`}
+            cx={x}
+            cy={layer.y}
+            r={layer.r}
+            fill={c1}
+            opacity="0.55"
+            className="ca-blink"
+            style={{ animationDelay: `${(li * 0.4 + i * 0.18) % 2.8}s` }}
+          />
+        )),
+      )}
+
+      {/* the descent path */}
+      <g stroke={`url(#${gid}-line)`} fill="none" strokeLinecap="round">
+        {DESCENT.map((d) => (
+          <path key={d} d={d} strokeWidth="1.2" opacity="0.35" />
+        ))}
+        {DESCENT.map((d, i) => (
+          <path
+            key={`p-${d}`}
+            d={d}
+            strokeWidth="2"
+            className="ca-pulse"
+            style={{ animationDelay: `${i * 0.5}s` }}
+          />
+        ))}
+      </g>
+
+      {/* entry point and the hit it lands on */}
+      <g>
+        <circle cx="232" cy="58" r="5.5" fill={c2} />
+        <circle cx="232" cy="58" r="5.5" fill="none" stroke={c2} strokeWidth="1" className="ca-ring" />
+        <circle cx="232" cy="58" r="14" fill={`url(#${gid}-glow)`} opacity="0.55" />
+      </g>
+      <g>
+        <circle cx="312" cy="162" r="5.5" fill={c2} />
+        <circle
+          cx="312"
+          cy="162"
+          r="5.5"
+          fill="none"
+          stroke={c2}
+          strokeWidth="1"
+          className="ca-ring"
+          style={{ animationDelay: '1s' }}
+        />
+        <circle cx="312" cy="162" r="16" fill={`url(#${gid}-glow)`} opacity="0.6" />
+      </g>
+    </>
+  )
+}
+
 /* ---------- flow: drifting signal lines (fallback) ---------- */
 
 function FlowArt({ c1, c2, gid }) {
@@ -355,6 +462,7 @@ const MOTIFS = {
   retrieval: RetrievalArt,
   pipeline: PipelineArt,
   vision: VisionArt,
+  vector: VectorArt,
   chart: ChartArt,
   flow: FlowArt,
 }

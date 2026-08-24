@@ -63,6 +63,8 @@ export const posts = Object.entries(modules)
       project: data.project ?? '',
       // Optional `art:` picks the cover animation; blank falls back to tags
       art: data.art ?? '',
+      // Optional `accent:` picks the cover colour; blank hashes from the slug
+      accentName: data.accent ?? '',
       content,
       minutes: readingTime(content),
     }
@@ -71,19 +73,24 @@ export const posts = Object.entries(modules)
 
 export const getPost = (slug) => posts.find((post) => post.slug === slug)
 
-// Each post gets a stable accent so cards and article covers read as distinct
-// without anyone having to supply artwork.
-const ACCENTS = [
-  { bar: 'from-violet-500 via-indigo-400 to-cyan-300', orb: 'bg-violet-500/25', chip: 'text-violet-200', c1: '#a78bfa', c2: '#22d3ee' },
-  { bar: 'from-amber-400 via-orange-400 to-rose-400', orb: 'bg-amber-500/20', chip: 'text-amber-200', c1: '#fbbf24', c2: '#fb7185' },
-  { bar: 'from-emerald-400 via-teal-300 to-cyan-300', orb: 'bg-emerald-500/20', chip: 'text-emerald-200', c1: '#34d399', c2: '#22d3ee' },
-  { bar: 'from-fuchsia-500 via-pink-400 to-violet-400', orb: 'bg-fuchsia-500/20', chip: 'text-fuchsia-200', c1: '#e879f9', c2: '#a78bfa' },
-]
+// Cover colours. A post picks one with `accent: <name>` in its frontmatter;
+// without that it gets a stable colour hashed from its slug, so posts differ
+// from each other without anyone having to choose.
+export const ACCENTS = {
+  violet: { bar: 'from-violet-500 via-indigo-400 to-cyan-300', orb: 'bg-violet-500/25', chip: 'text-violet-200', c1: '#a78bfa', c2: '#22d3ee' },
+  amber: { bar: 'from-amber-400 via-orange-400 to-rose-400', orb: 'bg-amber-500/20', chip: 'text-amber-200', c1: '#fbbf24', c2: '#fb7185' },
+  emerald: { bar: 'from-emerald-400 via-teal-300 to-cyan-300', orb: 'bg-emerald-500/20', chip: 'text-emerald-200', c1: '#34d399', c2: '#22d3ee' },
+  fuchsia: { bar: 'from-fuchsia-500 via-pink-400 to-violet-400', orb: 'bg-fuchsia-500/20', chip: 'text-fuchsia-200', c1: '#e879f9', c2: '#a78bfa' },
+  sky: { bar: 'from-sky-400 via-blue-400 to-indigo-400', orb: 'bg-sky-500/20', chip: 'text-sky-200', c1: '#38bdf8', c2: '#818cf8' },
+}
 
-export function accentFor(slug) {
+const ACCENT_NAMES = Object.keys(ACCENTS)
+
+export function accentFor(slug, name) {
+  if (name && ACCENTS[name]) return ACCENTS[name]
   let hash = 0
   for (const char of slug) hash = (hash * 31 + char.charCodeAt(0)) % 9973
-  return ACCENTS[hash % ACCENTS.length]
+  return ACCENTS[ACCENT_NAMES[hash % ACCENT_NAMES.length]]
 }
 
 // Turns a heading into a URL-safe anchor id — must stay in sync with the

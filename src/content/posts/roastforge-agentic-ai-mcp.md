@@ -4,6 +4,7 @@ subtitle: Resume Roaster & Rebuilder - A plain-English deep dive into the three 
 date: 2026-08-06
 tags: ["Agentic AI", "LangGraph", "MCP", "FastMCP", "Python"]
 art: graph
+accent: fuchsia
 project: https://github.com/vrund2005/roastforge
 ---
 

@@ -44,7 +44,7 @@ function Tags({ tags, limit = 4, className = '' }) {
 // One card shape for every post so the latest and the rest line up exactly;
 // `featured` only changes emphasis, never width.
 function PostCard({ post, featured = false }) {
-  const accent = accentFor(post.slug)
+  const accent = accentFor(post.slug, post.accentName)
 
   return (
     <article className="glass group relative overflow-hidden rounded-3xl shadow-xl shadow-black/20 transition-colors duration-500 hover:border-violet-300/40">

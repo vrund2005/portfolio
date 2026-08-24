@@ -4,6 +4,7 @@ subtitle: How an agentic RAG pipeline answers questions about a WhatsApp group c
 date: 2026-08-11
 tags: ["Agentic AI", "RAG", "LangGraph", "ChromaDB", "BM25", "Whisper"]
 art: retrieval
+accent: emerald
 project: https://github.com/vrund2005/WhatsUp-GenAI
 ---
 # Building a RAG system over a WhatsApp group chat that speaks two languages at once

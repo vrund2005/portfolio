@@ -51,8 +51,10 @@ const LANG_LABELS = {
   html: 'HTML',
   css: 'CSS',
   sql: 'SQL',
-  text: 'Snippet',
-  plaintext: 'Snippet',
+  // ```text is a "no language" fence, so leave the label blank rather than
+  // stamping "SNIPPET" on every diagram in a long post
+  text: '',
+  plaintext: '',
 }
 
 function CodeBlock({ lang, raw, children }) {
@@ -368,7 +370,7 @@ function BlogPost() {
     )
   }
 
-  const accent = accentFor(post.slug)
+  const accent = accentFor(post.slug, post.accentName)
   const readNext = posts.filter((entry) => entry.slug !== post.slug).slice(0, 2)
 
   return (
@@ -550,7 +552,7 @@ function BlogPost() {
                         className="glass group flex h-full flex-col overflow-hidden rounded-2xl transition duration-300 hover:-translate-y-1 hover:border-violet-300/40"
                       >
                         <div
-                          className={`h-0.5 w-full origin-left bg-gradient-to-r ${accentFor(entry.slug).bar} scale-x-0 transition-transform duration-500 group-hover:scale-x-100`}
+                          className={`h-0.5 w-full origin-left bg-gradient-to-r ${accentFor(entry.slug, entry.accentName).bar} scale-x-0 transition-transform duration-500 group-hover:scale-x-100`}
                         />
                         <div className="flex flex-1 flex-col p-6">
                           <p className="text-xs text-slate-500">
