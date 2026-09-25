@@ -23,6 +23,7 @@ import { marked } from 'marked'
 import { profile } from '../src/data/profile.js'
 import { skillGroups } from '../src/data/skills.js'
 import { projects } from '../src/data/projects.js'
+import { experience, describeMetric, formatMonth, formatPeriod } from '../src/data/experience.js'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const DIST = path.join(ROOT, 'dist')
@@ -136,6 +137,36 @@ function injectBody(shell, bodyHtml) {
 
 /* ---------- page bodies ---------- */
 
+const currentRole = experience
+  .flatMap((company) => company.roles.map((role) => ({ ...role, company: company.company })))
+  .find((role) => !role.end)
+
+function experienceSection() {
+  return experience
+    .map(
+      (company) => `<article>
+    <h3>${esc(company.company)}</h3>
+    ${company.roles
+      .map((role) => {
+        const lists = [
+          ...(role.metrics ?? []).map(describeMetric),
+          ...(role.highlights ?? []),
+        ]
+        return [
+          `<h4>${esc(role.title)} · ${esc(role.type)} · ${formatPeriod(role.start, role.end)}</h4>`,
+          role.summary ? `<p>${esc(role.summary)}</p>` : '',
+          lists.length ? `<ul>\n      ${lists.map((item) => `<li>${esc(item)}</li>`).join('\n      ')}\n    </ul>` : '',
+          role.stack?.length ? `<p>Tech: ${role.stack.map(esc).join(', ')}</p>` : '',
+        ]
+          .filter(Boolean)
+          .join('\n    ')
+      })
+      .join('\n    ')}
+  </article>`,
+    )
+    .join('\n  ')
+}
+
 function homeBody(posts) {
   return `
 <main>
@@ -147,9 +178,12 @@ function homeBody(posts) {
   <ul>
     <li><strong>Role:</strong> ${esc(profile.role)}</li>
     <li><strong>Education:</strong> ${esc(profile.education)}</li>
-    <li><strong>Experience:</strong> Internships at ${profile.internships.map(esc).join(' and ')}</li>
+    ${currentRole ? `<li><strong>Current role:</strong> ${esc(currentRole.title)} at ${esc(currentRole.company)} (${esc(currentRole.type.toLowerCase())}, since ${formatMonth(currentRole.start)})</li>` : ''}
     <li><strong>Availability:</strong> ${esc(profile.availability)}</li>
   </ul>
+
+  <h2>Experience</h2>
+  ${experienceSection()}
 
   <h2>Focus areas</h2>
   <ul>
@@ -239,7 +273,7 @@ const pages = [
     body: homeBody(posts),
     head: head({
       title: `${profile.name} — AI/ML Engineer | Agentic AI, Computer Vision & GenAI`,
-      description: `${profile.summary} ${profile.education}, with internships at ${profile.internships.join(' and ')}. See projects, deep-dive writing, and how to hire him.`,
+      description: profile.metaDescription,
       canonical: `${SITE}/`,
       type: 'profile',
     }),

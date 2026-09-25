@@ -7,6 +7,7 @@ import Magnetic from './fx/Magnetic'
 const navItems = [
   { label: 'Home', to: 'home' },
   { label: 'About', to: 'about' },
+  { label: 'Experience', to: 'experience' },
   { label: 'Skills', to: 'skills' },
   { label: 'Projects', to: 'projects' },
   { label: 'Hire Me', to: 'hire' },

@@ -12,6 +12,8 @@ import { ScrollTrigger } from '../../lib/gsap'
  *
  *   home     → huge dome rising below the hero (violet)   — raw data
  *   about    → left edge, glowing through the code card (cyan) — training
+ *   experience → right edge, glowing through the current-role card, calm and
+ *                steady (indigo) — in production
  *   skills   → right edge, calm and precise (emerald)     — the stack
  *   projects → small, high above the pinned cards (amber) — shipping
  *   contact  → crowning the heading, heartbeat pulse (rose) — connect
@@ -27,6 +29,7 @@ import { ScrollTrigger } from '../../lib/gsap'
 const PALETTE = [
   ['#8b5cf6', '#818cf8'], // home — violet / indigo
   ['#22d3ee', '#38bdf8'], // about — cyan / sky
+  ['#818cf8', '#93c5fd'], // experience — indigo / periwinkle
   ['#34d399', '#2dd4bf'], // skills — emerald / teal
   ['#fbbf24', '#fb923c'], // projects — amber / orange
   ['#fb7185', '#e879f9'], // contact — rose / fuchsia
@@ -35,6 +38,7 @@ const PALETTE = [
 // Transition i→i+1 plays while section i+1 scrolls into view
 const MORPH_TRIGGERS = [
   { id: 'about', start: 'top 80%', end: 'top 25%' },
+  { id: 'experience', start: 'top 80%', end: 'top 25%' },
   { id: 'skills', start: 'top 80%', end: 'top 25%' },
   { id: 'projects', start: 'top 80%', end: 'top 25%' },
   { id: 'contact', start: 'top 85%', end: 'top 45%' },
@@ -48,6 +52,7 @@ const MORPH_TRIGGERS = [
 const SECTION_STATES = [
   { x: 0, y: -4.7, scale: 3.25, amp: 0.26, flicker: 0, ringSpeed: 0.3 },
   { x: 'left', y: -0.1, scale: 1.75, amp: 0.48, flicker: 0.14, ringSpeed: 0.9 },
+  { x: 'right', y: -0.7, scale: 1.3, amp: 0.14, flicker: 0, ringSpeed: 0.55 },
   { x: 'right', y: -0.4, scale: 1.55, amp: 0.1, flicker: 0, ringSpeed: 0.5 },
   { x: 0, y: 3.4, scale: 1.0, amp: 0.32, flicker: 0, ringSpeed: 1.2 },
   { x: 0, y: 3.0, scale: 1.2, amp: 0.2, flicker: 0, ringSpeed: 0.7 },
@@ -198,6 +203,7 @@ function makeGlowTexture() {
 }
 
 const lerp = THREE.MathUtils.lerp
+const LAST_STATE = SECTION_STATES.length - 1
 
 function AiCore({ store }) {
   const groupRef = useRef(null)
@@ -281,8 +287,8 @@ function AiCore({ store }) {
     const m = motion.current
     const { segs, mouse } = store.current
 
-    // Ease the journey toward the scroll-driven target (0..4)
-    const target = segs[0] + segs[1] + segs[2] + segs[3]
+    // Ease the journey toward the scroll-driven target (0..LAST_STATE)
+    const target = segs.reduce((sum, seg) => sum + seg, 0)
     m.journey += (target - m.journey) * Math.min(1, d * 4.5)
 
     // Scroll velocity → extra energy
@@ -317,7 +323,7 @@ function AiCore({ store }) {
     group.position.z += (pz - group.position.z) * Math.min(1, d * 5)
 
     // Heartbeat at the contact anchor — two soft thumps per cycle
-    const heartness = THREE.MathUtils.clamp(m.journey - 3.2, 0, 0.8) / 0.8
+    const heartness = THREE.MathUtils.clamp(m.journey - (LAST_STATE - 0.8), 0, 0.8) / 0.8
     const beat = Math.pow(Math.max(Math.sin(t * 3.6), 0), 10) + 0.5 * Math.pow(Math.max(Math.sin(t * 3.6 + 0.5), 0), 10)
     const scale = lerp(a.scale, b.scale, f) * shrink * (1 + burst * 0.15 + heartness * beat * 0.09)
     group.scale.setScalar(scale)
@@ -381,7 +387,7 @@ function AiCore({ store }) {
 }
 
 function ScrollScene() {
-  const store = useRef({ segs: [0, 0, 0, 0], mouse: { x: 0, y: 0 } })
+  const store = useRef({ segs: MORPH_TRIGGERS.map(() => 0), mouse: { x: 0, y: 0 } })
   const [active, setActive] = useState(() => !document.hidden)
 
   // Section-entry progress drives the journey (handles pinned sections too,

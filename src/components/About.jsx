@@ -8,9 +8,9 @@ import GhostWord from './fx/GhostWord'
 import ShipPipeline from './fx/ShipPipeline'
 
 const stats = [
-  { value: '95+', label: 'GitHub Stars' },
-  { value: '35+', label: 'Projects' },
-  { value: '2', label: 'Internships' },
+  { value: '100+', label: 'GitHub Stars' },
+  { value: '38+', label: 'Projects' },
+  // { value: '2', label: 'Internships' },
 ]
 
 // Syntax color tokens for the code card
@@ -43,7 +43,7 @@ const codeLines = [
     { t: '        ', c: PLN },
     { t: 'self', c: SLF },
     { t: '.interned = [', c: PLN },
-    { t: '"iQudTek"', c: STR },
+    { t: '"iQud Informatics"', c: STR },
     { t: ',', c: PLN },
   ],
   [
@@ -229,7 +229,7 @@ function About() {
             <FadeIn as="p" className="text-lg leading-8 text-slate-300" delay={0.1}>
               I'm an AI/ML engineer who likes models best when they're{' '}
               <span className="font-semibold text-white">deployed</span>. Through internships at{' '}
-              <span className="font-semibold text-violet-200">iQudTek</span> and{' '}
+              <span className="font-semibold text-violet-200">iQud Informatics</span> and{' '}
               <span className="font-semibold text-violet-200">Bacancy</span>, I've built and shipped deep learning
               and computer-vision systems that solve real problems — not just benchmarks.
             </FadeIn>

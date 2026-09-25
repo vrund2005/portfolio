@@ -7,6 +7,7 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { experience, formatPeriod } from '../src/data/experience.js'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const POSTS_DIR = path.join(ROOT, 'src/content/posts')
@@ -127,15 +128,19 @@ function buildLlmsTxt(posts) {
 
 > Vrund Patel is an AI/ML engineer who builds Agentic AI, computer vision and
 > generative AI systems that reach production. He studies Computer Science and
-> Engineering (Data Science) at VGEC and has interned at iQudTek and Bacancy.
+> Engineering (Data Science) at VGEC and has interned at iQud Informatics and Bacancy.
 
 ## About
 
 - **Name:** Vrund Patel
 - **Role:** AI/ML Engineer
 - **Education:** B.E. Computer Science & Engineering (Data Science), VGEC
-- **Experience:** Internships at iQudTek and Bacancy, building and shipping deep
-  learning and computer-vision systems
+- **Experience:**
+${experience
+  .flatMap((company) =>
+    company.roles.map((role) => `  - ${role.title} (${role.type}) at ${company.company}, ${formatPeriod(role.start, role.end)}`),
+  )
+  .join('\n')}
 - **Website:** ${SITE}
 - **GitHub:** https://github.com/vrund2005
 - **LinkedIn:** https://www.linkedin.com/in/patel-vrund/

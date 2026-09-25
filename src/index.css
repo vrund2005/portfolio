@@ -143,11 +143,98 @@ textarea {
 
 /* ---------- Glassmorphism helper ---------- */
 /* Dark-tinted glass: keeps text readable over the bright particle scene */
+/* Prefixed first, standard last: the build's CSS minifier keeps only the last of
+   the pair, and Chrome/Firefox ignore the -webkit- one */
 .glass {
   background: rgba(9, 11, 22, 0.58);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- Pointer spotlight (see fx/Spotlight.jsx) ---------- */
+.spotlight {
+  background: radial-gradient(
+    32rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(129, 140, 248, 0.08),
+    transparent 45%
+  );
+}
+
+/* Both paint only a 1px ring over the element's border (mask cut-out) */
+.spotlight::before,
+.exp-live-ring {
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    20rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(165, 180, 252, 0.65),
+    transparent 60%
+  );
+}
+
+/* ---------- Experience: live border arc + promotion packet ---------- */
+/* Registered so the gradient's start angle can animate (static where unsupported) */
+@property --exp-arc {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.exp-live-ring {
+  background: conic-gradient(
+    from var(--exp-arc),
+    transparent 0turn,
+    transparent 0.6turn,
+    rgba(129, 140, 248, 0.9) 0.8turn,
+    rgba(103, 232, 249, 0.95) 0.92turn,
+    transparent 1turn
+  );
+}
+
+.exp-packet {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .exp-live-ring {
+    animation: exp-arc 9s linear infinite;
+  }
+  .exp-packet {
+    animation: exp-packet 3.2s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+  }
+}
+
+@keyframes exp-arc {
+  to {
+    --exp-arc: 1turn;
+  }
+}
+
+/* The packet is 1/5 of the track wide, so 500% of its own width = the whole track */
+@keyframes exp-packet {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  20%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(500%);
+    opacity: 0;
+  }
 }
 
 /* ============================================================

@@ -10,6 +10,7 @@ import ScrollHud from './components/ScrollHud'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
+import Experience from './components/Experience'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Writing from './components/Writing'
@@ -17,11 +18,12 @@ import Hire from './components/Hire'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import { applySeo, breadcrumbJsonLd } from './lib/seo'
+import { profile } from './data/profile'
 
 // Global morphing 3D scene is lazy-loaded so it never blocks first paint
 const ScrollScene = lazy(() => import('./components/fx/ScrollScene'))
 
-const sections = ['home', 'about', 'skills', 'projects', 'blog', 'hire', 'contact']
+const sections = ['home', 'about', 'experience', 'skills', 'projects', 'blog', 'hire', 'contact']
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
@@ -36,8 +38,7 @@ function App() {
   useEffect(() => {
     applySeo({
       title: 'Vrund Patel — AI/ML Engineer | Agentic AI, Computer Vision & GenAI',
-      description:
-        'Vrund Patel is an AI/ML engineer building Agentic AI, computer vision and GenAI systems that reach production. CSE (Data Science) at VGEC, with internships at iQudTek and Bacancy. See projects, deep-dive writing, and how to hire him.',
+      description: profile.metaDescription,
       path: '/',
       type: 'profile',
       jsonLd: breadcrumbJsonLd([{ name: 'Home', path: '/' }]),
@@ -126,6 +127,7 @@ function App() {
       <main className="relative z-10">
         <Hero started={ready} />
         <About />
+        <Experience />
         <Skills />
         <Projects />
         <Writing />

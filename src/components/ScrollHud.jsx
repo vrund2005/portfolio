@@ -9,6 +9,7 @@ import { scrollToId } from '../lib/scroll'
 const railItems = [
   { id: 'home', label: 'Data', dot: 'bg-violet-400', glow: 'shadow-violet-400/60' },
   { id: 'about', label: 'Model', dot: 'bg-cyan-300', glow: 'shadow-cyan-300/60' },
+  { id: 'experience', label: 'Prod', dot: 'bg-indigo-300', glow: 'shadow-indigo-300/60' },
   { id: 'skills', label: 'Stack', dot: 'bg-emerald-300', glow: 'shadow-emerald-300/60' },
   { id: 'projects', label: 'Ship', dot: 'bg-amber-300', glow: 'shadow-amber-300/60' },
   { id: 'blog', label: 'Write', dot: 'bg-sky-300', glow: 'shadow-sky-300/60' },
@@ -16,18 +17,24 @@ const railItems = [
   { id: 'contact', label: 'Connect', dot: 'bg-rose-300', glow: 'shadow-rose-300/60' },
 ]
 
+// Numbered by rail order, so adding a section never means renumbering
 const phases = {
-  home: { num: '01', label: 'ingesting data', color: 'text-violet-300' },
-  about: { num: '02', label: 'training the model', color: 'text-cyan-300' },
-  skills: { num: '03', label: 'optimizing the stack', color: 'text-emerald-300' },
-  projects: { num: '04', label: 'shipping projects', color: 'text-amber-300' },
-  blog: { num: '05', label: 'publishing the docs', color: 'text-sky-300' },
-  hire: { num: '06', label: 'ready to deploy', color: 'text-fuchsia-300' },
-  contact: { num: '07', label: 'connection open', color: 'text-rose-300' },
+  home: { label: 'ingesting data', color: 'text-violet-300' },
+  about: { label: 'training the model', color: 'text-cyan-300' },
+  experience: { label: 'now in production', color: 'text-indigo-300' },
+  skills: { label: 'optimizing the stack', color: 'text-emerald-300' },
+  projects: { label: 'shipping projects', color: 'text-amber-300' },
+  blog: { label: 'publishing the docs', color: 'text-sky-300' },
+  hire: { label: 'ready to deploy', color: 'text-fuchsia-300' },
+  contact: { label: 'connection open', color: 'text-rose-300' },
 }
 
+const pad = (n) => String(n).padStart(2, '0')
+
 function ScrollHud({ activeSection }) {
-  const phase = phases[activeSection] ?? phases.home
+  const phaseId = phases[activeSection] ? activeSection : 'home'
+  const phase = phases[phaseId]
+  const phaseNum = pad(railItems.findIndex((item) => item.id === phaseId) + 1)
 
   return (
     <>
@@ -69,8 +76,8 @@ function ScrollHud({ activeSection }) {
         className="fixed bottom-6 left-6 z-40 hidden items-center gap-2 font-mono text-[11px] tracking-wide text-slate-500 lg:flex"
       >
         <span className="text-slate-600">[</span>
-        <span className={phase.color}>{phase.num}</span>
-        <span className="text-slate-600">/07 ]</span>
+        <span className={phase.color}>{phaseNum}</span>
+        <span className="text-slate-600">/{pad(railItems.length)} ]</span>
         <span className={`transition-colors duration-500 ${phase.color}`}>{phase.label}</span>
         <span className={`inline-block h-3 w-1.5 animate-pulse ${phase.color.replace('text-', 'bg-')}`} />
       </div>
