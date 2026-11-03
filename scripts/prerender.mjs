@@ -24,6 +24,7 @@ import { profile } from '../src/data/profile.js'
 import { skillGroups } from '../src/data/skills.js'
 import { projects } from '../src/data/projects.js'
 import { experience, describeMetric, formatMonth, formatPeriod } from '../src/data/experience.js'
+import { games, STATUS_LABEL } from '../src/data/games.js'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const DIST = path.join(ROOT, 'dist')
@@ -247,6 +248,22 @@ function blogIndexBody(posts) {
 </main>`
 }
 
+function gamesBody() {
+  const items = games
+    .map(
+      (g) => `<li><h2>${esc(g.title)}</h2><p>${esc(g.kicker)} — ${esc(STATUS_LABEL[g.status])}. ${esc(g.blurb)}</p>${
+        g.url ? `<p><a href="${esc(g.url)}">Play ${esc(g.title)}</a></p>` : ''
+      }</li>`,
+    )
+    .join('')
+  return `<main>
+  <h1>VRCADE — hand-tracking games by ${esc(profile.name)}</h1>
+  <p>Browser games you play with your hands: real-time hand tracking turns a webcam into the controller. Everything runs on the player's device.</p>
+  <ul>${items}</ul>
+  <nav><a href="${SITE}/">${esc(profile.name)}</a> · <a href="${SITE}/blog">Blog</a></nav>
+</main>`
+}
+
 function postBody(post) {
   return `
 <main>
@@ -285,6 +302,15 @@ const pages = [
       title: `Blog — ${profile.name} | Agentic AI, RAG & Computer Vision Deep Dives`,
       description: `Plain-English deep dives by ${profile.name} on Agentic AI and LangGraph, RAG pipelines, MCP, computer vision and automation.`,
       canonical: `${SITE}/blog`,
+    }),
+  },
+  {
+    url: '/games',
+    body: gamesBody(),
+    head: head({
+      title: `VRCADE — Hand-tracking games by ${profile.name}`,
+      description: `Browser games you play with your hands: computer-vision games by ${profile.name} built on real-time hand tracking. Draw in the air, slice fruit with your fingers, cast spells.`,
+      canonical: `${SITE}/games`,
     }),
   },
   ...posts.map((post) => ({

@@ -7,6 +7,8 @@ import NotFound from './404.jsx'
 // Blog routes are lazy-loaded so the markdown pipeline never weighs down the home page
 const Blog = lazy(() => import('./pages/Blog.jsx'))
 const BlogPost = lazy(() => import('./pages/BlogPost.jsx'))
+// Games hub has its own look and a WebGL scene; never loaded unless visited
+const Games = lazy(() => import('./pages/Games.jsx'))
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -25,6 +27,7 @@ function Router() {
           <Route path="/" element={<App />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/games" element={<Games />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

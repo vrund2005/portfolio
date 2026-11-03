@@ -65,6 +65,7 @@ function buildSitemap(posts) {
   const staticPages = [
     { path: '/', priority: '1.0', changefreq: 'weekly' },
     { path: '/blog', priority: '0.8', changefreq: 'weekly' },
+    { path: '/games', priority: '0.7', changefreq: 'monthly' },
   ]
   const latest = posts[0]?.date || new Date().toISOString().slice(0, 10)
 
@@ -162,6 +163,7 @@ ${experience
 ## Pages
 
 - [Portfolio home](${SITE}/): about, skills, projects, writing and hiring
+- [Games](${SITE}/games): VRCADE, browser games played with hand tracking (computer vision)
 - [Blog](${SITE}/blog): plain-English deep dives on every project shipped
 
 ## Writing

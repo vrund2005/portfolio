@@ -67,6 +67,12 @@ function Navbar({ activeSection, isScrolled }) {
           >
             Blog
           </Link>
+          <Link
+            to="/games"
+            className="link-sweep cursor-pointer py-2 text-sm font-medium text-slate-400 transition-colors duration-300 hover:text-white"
+          >
+            Games
+          </Link>
         </div>
 
         <button
@@ -106,6 +112,13 @@ function Navbar({ activeSection, isScrolled }) {
             className="cursor-pointer rounded-lg px-4 py-2.5 text-left text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
           >
             Blog
+          </Link>
+          <Link
+            to="/games"
+            onClick={() => setIsOpen(false)}
+            className="cursor-pointer rounded-lg px-4 py-2.5 text-left text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
+          >
+            Games
           </Link>
         </div>
       </div>
