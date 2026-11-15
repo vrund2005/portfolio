@@ -21,6 +21,19 @@ export const games = [
     art: 'doodle',
   },
   {
+    slug: 'copycat-clash',
+    title: 'Copycat Clash',
+    kicker: 'Multiplayer · Pose party',
+    status: 'live',
+    url: 'https://copycat.vrund.dev',
+    blurb:
+      'Strike a pose, say “ready”, and the camera snaps. Everyone else races to copy it, then a pose AI and your friends’ votes decide who nailed it.',
+    controls: ['🗣️ Say “ready” — snap', '🧍 Copy the pose', '⭐ Vote the best'],
+    tech: ['MediaPipe Pose', 'Durable Objects', 'Pose similarity'],
+    players: '2–8 players',
+    art: 'copycat',
+  },
+  {
     slug: 'wizard-duel',
     title: 'Wizard Duel',
     kicker: 'Solo · Spellcasting',

@@ -32,6 +32,23 @@ const arts = {
       <path d="M150 128 h40 M150 120 h28 M150 112 h34" />
     </>
   ),
+  copycat: (
+    <>
+      {/* the pose to copy */}
+      <circle cx="64" cy="32" r="9" />
+      <path d="M50 50 H78 L72 90 H56 Z" />
+      <path d="M50 50 L34 38 L26 18 M78 50 L94 60 L106 50" />
+      <path d="M56 90 L50 114 L48 136 M72 90 L82 112 L88 134" />
+      {/* the copycat, slightly off */}
+      <g className="hot">
+        <circle cx="134" cy="34" r="9" />
+        <path d="M120 52 H148 L142 92 H126 Z" />
+        <path d="M120 52 L106 36 L102 16 M148 52 L164 66 L178 62" />
+        <path d="M126 92 L122 116 L116 136 M142 92 L150 114 L152 136" />
+      </g>
+      <path d="M92 142 h16" strokeDasharray="2 4" />
+    </>
+  ),
   wizard: (
     <>
       <path className="hot" d="M60 76 m-26 0 a26 26 0 1 0 52 0 a26 26 0 1 0 -52 0" />
